@@ -60,13 +60,12 @@ public class Administrateur {
     // L'Anotation d'Email
     // message : message afficher si le champs de notre email est vide
     @Email(message = "email incorrect")
-
     // Not Null de base de donnée
     @Column(nullable = false)
     private String email;
 
     // ==================== Pour le role =====================
-    private boolean role;
+    private String role;
 
     //======================= POUR MOT DE PASSE ===============================
 
@@ -80,10 +79,7 @@ public class Administrateur {
     // Not Null de base de donnée
     @Column(nullable = false)
     private String motDePasse;
-    // ========================== list enseignants ====================
-    @OneToMany(mappedBy = "administrateur", orphanRemoval = true)
-    @JsonIgnore
-    private List<Enseignant> enseignant = new ArrayList<>();
+
 
    
     

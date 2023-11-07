@@ -11,8 +11,8 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI apiQuizOpenApi() {
         return new OpenAPI()
-                .info(new Info().title("Quiz Api")
-                        .description("Une api quiz pour les plateformes quiz")
+                .info(new Info().title("EduUnity api")
+                        .description("Une api pour les plateformes elearning")
                         .version("1.0.0"));
     }
 }

@@ -11,6 +11,6 @@ import java.util.List;
 public interface VideosRepository extends JpaRepository<Videos, Integer> {
 
     List<Videos> findByEnseignantIdEnseignant(int idEnseignant);
-    public Videos findById(int idVideos);
+    public Videos findByIdVideos(int idVideos);
 
 }

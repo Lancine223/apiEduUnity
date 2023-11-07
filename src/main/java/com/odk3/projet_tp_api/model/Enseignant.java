@@ -9,14 +9,11 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-@Entity
 @Data
+@Entity
 public class Enseignant {
     @Id
-    // Pour mettre le type en auto incremente
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    // Not Null de base de donnée
     @Column(nullable = false)
     private int idEnseignant;
 
@@ -42,11 +39,36 @@ public class Enseignant {
 
     // lenght de notre prenom
     // message : message afficher si le champs de notre prenom est vide
-    @Size(min = 2,message = "veuillez saisir un noms correcte")
+    @Size(min = 2,message = "veuillez saisir un prenom correcte")
 
     // Not Null de base donnée
     @Column(nullable = false)
     private String prenom;
+
+    //=========================== POUR PRENOM ===========================
+
+    // Not Null de Spring
+    // message : message afficher si le champs de notre prenom est vide
+    @NotNull(message = "Champs vide")
+    // lenght de notre prenom
+    // message : message afficher si le champs de notre prenom est vide
+    @Size(min = 2,message = "veuillez saisir un etablissement correcte")
+
+    // Not Null de base donnée
+    @Column()
+    private String etablissement;
+
+    // Not Null de Spring
+    // message : message afficher si le champs de notre prenom est vide
+    @NotNull(message = "Champs vide")
+
+    // lenght de notre prenom
+    // message : message afficher si le champs de notre prenom est vide
+    @Size(min = 2,message = "veuillez saisir un numero correcte")
+
+    // Not Null de base donnée
+    @Column(nullable = false)
+    private String telephone;
 
 
     //=========================== POUR Diplome ===========================
@@ -57,11 +79,17 @@ public class Enseignant {
 
     // lenght de notre prenom
     // message : message afficher si le champs de notre prenom est vide
-    @Size(min = 2,message = "veuillez saisir un nom correcte")
+    @Size(min = 2,message = "veuillez uploader votre diplôme")
 
     // Not Null de base donnée
-    @Column(nullable = false)
+   @Column(nullable = false)
     private String diplome;
+
+
+    @NotNull
+    // Not Null de base donnée
+    @Column(columnDefinition = "boolean default false",nullable = false )
+    private Boolean acces;
 
     //========================== POUR EMAIL ============================
 
@@ -81,7 +109,7 @@ public class Enseignant {
     //======================= POUR MOT DE PASSE ===============================
 
     // Not Null de Spring
-    @NotNull(message = "Champs vide")
+   @NotNull(message = "Champs vide")
     // size : lenght de notre Mot de passe
     // message : message afficher si le champs de notre Mot de passe est vide
     @Size(min = 6, message = "Saisissez un Mot de pass correct")
@@ -89,20 +117,15 @@ public class Enseignant {
     @Column(nullable = false)
     private String motDePasse;
 
-    // ============== NiveauRepository =====================
+    // ============== ClasseRepository =====================
     @ManyToOne
-    @JoinColumn(name = "idNiveaux",nullable = false)
-    private Niveau niveau;
+    @JoinColumn(name = "idClasse", nullable = false)
+    private Classe classe;
     // ============== AproposRepository =====================
     @OneToOne
     @JoinColumn(name = "idApropos")
     private Apropos apropos;
     // ============== AdministrateurRepository =====================
-
-    @ManyToOne
-    @JoinColumn(name = "idAdministrateur",nullable = false)
-    private Administrateur administrateur;
-
     // ============== AbonnementRepository =====================
 
     @OneToMany(mappedBy = "enseignant", orphanRemoval = true)
@@ -149,10 +172,11 @@ public class Enseignant {
 
     @OneToMany(mappedBy = "enseignant", orphanRemoval = true)
     @JsonIgnore
-    private List<Notation> notations = new ArrayList<>();
+    private List<Notation> notation = new ArrayList<>();
+
     // ============== Participant =====================
-    @OneToMany(mappedBy = "enseignant", orphanRemoval = true)
-    @JsonIgnore
-    private List<Participer> participerList = new ArrayList<>();
-    
+
+
+
+
 }

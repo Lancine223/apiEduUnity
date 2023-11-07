@@ -55,10 +55,10 @@ public class Etudiant {
     @Column(nullable = false)
     private String prenom;
 
-    // NiveauRepository
+    // ============== ClasseRepository =====================
     @ManyToOne
-    @JoinColumn(name = "idNiveau", nullable = false)
-    private Niveau niveau;
+    @JoinColumn(name = "idClasse")
+    private Classe classe;
 
     // pour le telephone
 
@@ -105,4 +105,8 @@ public class Etudiant {
     @OneToMany(mappedBy = "etudiant", orphanRemoval = true)
     @JsonIgnore
     private List<TodoList> todoListList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "etudiant", orphanRemoval = true)
+    @JsonIgnore
+    private List<Participer> participerList = new ArrayList<>();
 }

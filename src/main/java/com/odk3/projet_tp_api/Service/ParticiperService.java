@@ -3,7 +3,6 @@ package com.odk3.projet_tp_api.Service;
 import com.odk3.projet_tp_api.Repository.EtudiantRepository;
 import com.odk3.projet_tp_api.Repository.ParticiperRepository;
 import com.odk3.projet_tp_api.Repository.QuizRepository;
-import com.odk3.projet_tp_api.Repository.UtilisateurRepository;
 import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
 import com.odk3.projet_tp_api.model.Participer;

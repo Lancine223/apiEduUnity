@@ -50,8 +50,8 @@ public class QuizService {
         }
     }
     public List<Quiz> trouverQuizByEnseignant(int idEnseignant){
-        if (!quizRepository.findByIdEnseignant(idEnseignant).isEmpty()){
-            return quizRepository.findByIdEnseignant(idEnseignant);
+        if (!quizRepository.findByEnseignantIdEnseignant(idEnseignant).isEmpty()){
+            return quizRepository.findByEnseignantIdEnseignant(idEnseignant);
         }else {
             throw new NotFoundException("Aucun quize disponible");
         }

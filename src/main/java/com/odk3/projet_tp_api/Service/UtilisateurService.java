@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class UtilisateurService {
-
+/*
     // Pour acceder a la table utilisateur dans la base de donnée
     @Autowired // Injection de dependance
     UtilisateurRepository utilisateurRepository; // Un variable de type UtilisateurRepository
@@ -63,6 +63,6 @@ public class UtilisateurService {
         }
 
     }
-
+*/
 
 }

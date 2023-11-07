@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface UtilisateurRepository extends JpaRepository<Utilisateur,Integer> {
-
+//@Repository
+public interface UtilisateurRepository {
+/*
     public Utilisateur findByEmail(String email);
 
     public Utilisateur findByEmailAndMotDePasse(String email, String mot_de_passe);
 
-    public Utilisateur findByIdUtilisateur(int id);
+    public Utilisateur findByIdUtilisateur(int id); */
 }

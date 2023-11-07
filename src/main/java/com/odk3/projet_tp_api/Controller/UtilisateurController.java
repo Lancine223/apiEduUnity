@@ -1,5 +1,5 @@
 package com.odk3.projet_tp_api.Controller;
-
+/*
 import com.odk3.projet_tp_api.Service.UtilisateurService;
 import com.odk3.projet_tp_api.model.Quiz;
 import com.odk3.projet_tp_api.model.Utilisateur;
@@ -17,12 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@RestController
-@RequestMapping("/utilisateur")
+*/
+//@RestController
+//@RequestMapping("/utilisateur")
 public class UtilisateurController {
 
-
+/*
     @Autowired // Injection de dependance
     UtilisateurService utilisateurService; // Un variable de type UtilisateurService
 
@@ -30,7 +30,7 @@ public class UtilisateurController {
     public Utilisateur ajouterUtilisateur(@RequestBody Utilisateur utilisateur){
         return utilisateurService.creerUtilisateur(utilisateur);
     }*/
-
+/*
     @Operation(summary = "Inserer un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Utilisateur inserer",content = {
@@ -75,8 +75,9 @@ public class UtilisateurController {
     public List<Utilisateur> allUsers(){
         return utilisateurService.listUtilisateurs();
     }
+    */
 
-
+/*
     @Operation(summary = "Modifier un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Utilisateur modifier",content = {
@@ -106,5 +107,5 @@ public class UtilisateurController {
         return utilisateurService.supprimeUtilisateur(utilisateur);
     }
 
-
+*/
 }

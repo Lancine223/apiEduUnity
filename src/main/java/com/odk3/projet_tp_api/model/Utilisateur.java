@@ -1,20 +1,14 @@
 package com.odk3.projet_tp_api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Entity
+//@Data
+//@Entity
 public class Utilisateur {
-    @Id
+  /*  @Id
     // Pour mettre le type en auto incremente
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -86,5 +80,5 @@ public class Utilisateur {
     @JsonIgnore
     private List<Participer> participerList = new ArrayList<>();
 
-
+*/
 }

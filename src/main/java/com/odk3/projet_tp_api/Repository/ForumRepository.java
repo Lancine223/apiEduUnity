@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ForumRepository extends JpaRepository<Forum, Integer> {
-    public List<Forum> findByIdEnseignant(Enseignant enseignant);
+    public List<Forum> findByEnseignantIdEnseignant(int idEnseignant);
 }

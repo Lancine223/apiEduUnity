@@ -16,7 +16,7 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
     public  Quiz findByIdQuizAndEnseignant(int id, Enseignant enseignant);
 
     public List<Quiz> findByTitreContains(String cleTitre);
-    public List<Quiz> findByIdEnseignant(int idEnseignant);
+    public List<Quiz> findByEnseignantIdEnseignant(int idEnseignant);
 
     Quiz findByIdQuiz(int id);
 }

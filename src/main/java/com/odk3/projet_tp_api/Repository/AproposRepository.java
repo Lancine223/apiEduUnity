@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AproposRepository extends JpaRepository<Apropos, Integer> {
 
-
-    public Apropos findByIdEnseignant(int idEnseignant);
     public Apropos findByIdApropos(int idApropos);
+    Apropos findByEnseignant(Enseignant enseignant);
 
 }

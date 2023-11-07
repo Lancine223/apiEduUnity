@@ -1,72 +1,75 @@
 package com.odk3.projet_tp_api.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.odk3.projet_tp_api.Service.EnseignantService;
-import com.odk3.projet_tp_api.model.Administrateur;
 import com.odk3.projet_tp_api.model.Enseignant;
+import com.odk3.projet_tp_api.model.Videos;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/enseignant")
 public class EnseignantController {
     @Autowired
     EnseignantService enseignantService;
 
 
-    @Operation(summary = "Ajouter un enseignant")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "enseignant inserer avec succès",content = {
-                    @Content(mediaType = "application/json",schema = @Schema(implementation = Administrateur.class))
-            }),
-            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
-            @ApiResponse(responseCode = "409",description = "L'enseignant exist déjà", content = @Content),
-            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
-    })
-    @PostMapping("/add")
-    public Object addEnseignant(@Valid @RequestBody Enseignant enseignant){
-        return enseignantService.creerEnseignant(enseignant);
+    @PostMapping("/create")
+    @Operation(summary = "Création d'un Enseignant")
+    public ResponseEntity<Enseignant> createEnseignant(
+            @Valid @RequestParam("enseignant") String enseignantString,
+            @RequestParam(value ="diplome", required=false) MultipartFile multipartFile) throws Exception {
+
+        Enseignant enseignant = new Enseignant();
+        try{
+            enseignant = new JsonMapper().readValue(enseignantString, Enseignant.class);
+        }catch(JsonProcessingException e){
+            throw new Exception(e.getMessage());
+        }
+
+        Enseignant savedUser = enseignantService.createEnseignant(enseignant,multipartFile);
+
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
+    //////////////////////////////////////////
+    //////////////////////////
 
-    @Operation(summary = "Connexion d'un enseignant")
+    @GetMapping("/read")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Enseignant connecter",content = {
-                    @Content(mediaType = "application/json",schema = @Schema(implementation = Enseignant.class))
+            @ApiResponse(responseCode = "200",description = "Succes",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Videos.class))
             }),
             @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
             @ApiResponse(responseCode = "404",description = "Enseignant introuvable", content = @Content),
             @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
     })
-    @PostMapping("/login")
-    public Object connexion(@Parameter(description = "Email de l'enseignant") @RequestParam("email") String email,
-                            @Parameter(description = "Mot de passe de l'enseignant") @RequestParam("mot_de_passe") String mot_de_passe) {
-        return enseignantService.connectionEnseignant(email, mot_de_passe);
+    @Operation(summary = "Affichage de la  liste des EnseignantS")
+    public ResponseEntity<List<Enseignant>> getEnseignant(){
+        return new ResponseEntity<>(enseignantService.getAllEnseignant(),HttpStatus.OK);}
+    @GetMapping("/read/{id}")
+    @Operation(summary = "Affichage  d'un Enseignant")
+    public ResponseEntity<Enseignant> getEnseignantById(@Valid @PathVariable int id){
+        return new ResponseEntity<>(enseignantService.getEnseignantById(id),HttpStatus.OK) ;}
+
+    @PutMapping("/changeAccess/{idEnseignant}")
+    public ResponseEntity<String> tochangeAccess(@PathVariable int idEnseignant) {
+        enseignantService.changeAccess(idEnseignant);
+        return ResponseEntity.ok("Succès : Accès de l'enseignant modifié");
     }
-
-
-    @Operation(summary = "Renvoie la liste des Enseignants")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "List renvoyer",content = {
-                    @Content(mediaType = "application/json",schema = @Schema(implementation = Administrateur.class))
-            }),
-            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
-            @ApiResponse(responseCode = "204",description = "List vide", content = @Content),
-            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
-    })
-    @GetMapping("/list")
-    public List<Enseignant> allEnseignants(){
-        return enseignantService.listEnseignants();
-    }
-
 
     @Operation(summary = "Modifier un Enseignant")
     @ApiResponses(value = {
@@ -82,19 +85,16 @@ public class EnseignantController {
         return enseignantService.modifierEnseignant(enseignant);
     }
 
-
-    @Operation(summary = "Supprimer un Enseignant")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Enseignant supprimer",content = {
-                    @Content(mediaType = "application/json",schema = @Schema(implementation = Enseignant.class))
-            }),
-            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
-            @ApiResponse(responseCode = "404",description = "Enseignant introuvable", content = @Content),
-            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
-    })
-    @DeleteMapping("/supprimer")
-    public String supprimer(@Valid @RequestBody Enseignant enseignant) {
-        return enseignantService.supprimeEnseignant(enseignant);
+    @DeleteMapping("/delete/{idEnseignant}")
+    @Operation(summary = "Supprimer une enseignant par son ID")
+    public String deleteEnseigant(@Valid @PathVariable int idEnseignant) {
+        return enseignantService.supprimer(idEnseignant);
+    }
+    @PostMapping("/login")
+    @Operation(summary = "Connexion d'un Enseignant")
+    public Object connexion(@RequestParam("email") String email,
+                            @RequestParam("motDePasse") String motDePasse) {
+        return enseignantService.connectionEnseignant(email, motDePasse);
     }
 
 }

@@ -18,7 +18,7 @@ public class Cours {
 
     @NotNull(message = "le champs contenu est vide")
     @Column(nullable = false)
-    private String contenu;
+    private String document;
 
     @ManyToOne
     @JoinColumn(name = "idEnseignant", nullable = false)

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 public class Abonnement {
@@ -20,6 +22,11 @@ public class Abonnement {
     @NotNull(message = "le champ montant est vide")
     @Column(nullable = false)
     private int montant;
+
+    @NotNull(message = "la date est vide")
+    @Column(nullable = false)
+    private String dateAbonnement;
+
 
     @ManyToOne
     @JoinColumn(name = "idEnseignant", nullable = false)

@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface NiveauRepository extends JpaRepository<Niveau, Integer> {
-    public List<Niveau> findByidDomaine(int idDomaine);
     public Niveau findByIdNiveau(int idNiveau);
 
 }

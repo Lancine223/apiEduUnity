@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface DiscussionRepository extends JpaRepository<Discussion, Integer> {
-    public List<Discussion> findByIdForum(Forum forum);
+    public List<Discussion> findByForumIdForum(int idForum);
 
 }

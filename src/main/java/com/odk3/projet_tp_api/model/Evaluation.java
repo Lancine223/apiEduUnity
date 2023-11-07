@@ -32,8 +32,6 @@ public class Evaluation {
     // Not Null de base de donnée
     @Column(nullable = false)
     private String fichier;
-
-
     @ManyToOne
     //Joindre le colonne
     @JoinColumn(name = "idCorrection", nullable = false)

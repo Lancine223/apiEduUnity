@@ -2,8 +2,6 @@ package com.odk3.projet_tp_api.Controller;
 
 import com.odk3.projet_tp_api.Service.AproposService;
 import com.odk3.projet_tp_api.model.Apropos;
-import com.odk3.projet_tp_api.model.Domaine;
-import com.odk3.projet_tp_api.model.Niveau;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,9 +11,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/apropos")
 public class AproposController {
     @Autowired
