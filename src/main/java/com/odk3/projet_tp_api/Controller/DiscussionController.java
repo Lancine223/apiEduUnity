@@ -2,7 +2,6 @@ package com.odk3.projet_tp_api.Controller;
 
 import com.odk3.projet_tp_api.Service.DiscussionService;
 import com.odk3.projet_tp_api.model.Discussion;
-import com.odk3.projet_tp_api.model.Forum;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/discussion")

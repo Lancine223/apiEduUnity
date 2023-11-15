@@ -4,9 +4,7 @@ import com.odk3.projet_tp_api.Repository.NiveauRepository;
 import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
-import com.odk3.projet_tp_api.model.Abonnement;
 import com.odk3.projet_tp_api.model.Niveau;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +53,12 @@ public class NiveauService {
             throw  new NotFoundException("Cet niveau n'existe pas");
         }
 
+    }
+    public Niveau getNiveauById(int id){
+        Niveau niveau = niveauRepository.findByIdNiveau(id);
+        if(niveau != null)
+            return niveau;
+        else
+            throw new NotFoundException("Cet niveau n'existe pas");
     }
 }

@@ -50,9 +50,16 @@ public class FiliereService {
         // Si la liste est vide, le systÃ¨me lÃ¨vera une exception
         if (ListNiveaux.isEmpty())
             throw new EntityNotFoundException("Aucun Filiere trouvé");
-
         // Dans le cas contraire le systÃ¨me retourne la liste
         return ListNiveaux;
+    }
+
+    public Filiere getFiliereById(int id){
+        Filiere filiere = filiereRepository.findByIdFiliere(id);
+        if(filiere != null)
+            return filiere;
+        else
+            throw new NotFoundException("Cet Filiere n'existe pas");
     }
     //+++++++++
     public String supprimeFiliere(Filiere filiere) {

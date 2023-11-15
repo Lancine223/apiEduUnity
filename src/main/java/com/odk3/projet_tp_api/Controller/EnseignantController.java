@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/enseignant")
@@ -63,11 +63,12 @@ public class EnseignantController {
     @GetMapping("/read/{id}")
     @Operation(summary = "Affichage  d'un Enseignant")
     public ResponseEntity<Enseignant> getEnseignantById(@Valid @PathVariable int id){
-        return new ResponseEntity<>(enseignantService.getEnseignantById(id),HttpStatus.OK) ;}
+        return new ResponseEntity<>(enseignantService.getEnseignantById(id),HttpStatus.OK) ;
+    }
 
     @PutMapping("/changeAccess/{idEnseignant}")
     public ResponseEntity<String> tochangeAccess(@PathVariable int idEnseignant) {
-        enseignantService.changeAccess(idEnseignant);
+        enseignantService.changeAccessE(idEnseignant);
         return ResponseEntity.ok("Succès : Accès de l'enseignant modifié");
     }
 

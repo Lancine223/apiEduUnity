@@ -2,7 +2,6 @@ package com.odk3.projet_tp_api.Controller;
 
 import com.odk3.projet_tp_api.Service.ParticiperService;
 import com.odk3.projet_tp_api.model.Participer;
-import com.odk3.projet_tp_api.model.Question;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,13 +11,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RequestMapping("participer")
 public class ParticiperController {
 

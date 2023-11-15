@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/etudiant")
@@ -65,6 +65,10 @@ public class EtudiantController {
         return etudiantService.listEtudiants();
     }
 
+    @GetMapping("/etudiants/abonnement/{idEtudiant}")
+    public boolean estAbonne(@PathVariable int idEtudiant) {
+        return etudiantService.estAbonne(idEtudiant);
+    }
 
     @Operation(summary = "Modifier un Etudiant")
     @ApiResponses(value = {

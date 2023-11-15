@@ -2,10 +2,8 @@ package com.odk3.projet_tp_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jshell.Snippet;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -38,7 +36,6 @@ public class Etudiant {
     //=========================== POUR le status ===========================
     @OneToOne
     @JoinColumn(name = "idStatusEtudiant")
-    @JsonIgnore
     private StatusEtudiant statusEtudiant;
 
     //=========================== POUR PRENOM ===========================
@@ -89,6 +86,19 @@ public class Etudiant {
     // Not Null de base de donnée
     @Column(nullable = false)
     private String motDePasse;
+
+    @Column(name = "est_abonner", columnDefinition = "boolean default false",nullable = false)
+    private boolean estAbonner;
+
+    // Les autres getters et setters
+
+    public boolean isEstAbonner() {
+        return estAbonner;
+    }
+
+    public void setEstAbonner(boolean estAbonner) {
+        this.estAbonner = estAbonner;
+    }
 
     @OneToMany(mappedBy = "etudiant", orphanRemoval = true)
     @JsonIgnore

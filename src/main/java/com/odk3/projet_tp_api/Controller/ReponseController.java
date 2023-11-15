@@ -1,11 +1,7 @@
 package com.odk3.projet_tp_api.Controller;
 
-import com.odk3.projet_tp_api.Repository.ReponseRepository;
 import com.odk3.projet_tp_api.Service.ReponseService;
-import com.odk3.projet_tp_api.model.Question;
-import com.odk3.projet_tp_api.model.Quiz;
 import com.odk3.projet_tp_api.model.Reponse;
-import com.odk3.projet_tp_api.model.Utilisateur;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,15 +9,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/reponse")
 public class ReponseController {

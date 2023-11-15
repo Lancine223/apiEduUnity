@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/classe")
@@ -37,6 +37,15 @@ public class ClasseController {
         return classeService.creerClasse(classe);
     }
 
+    @GetMapping("/read/{idClasse}")
+    public ResponseEntity<Classe> getOneClasse(@PathVariable int idClasse) {
+        Classe classe = classeService.getClasseById(idClasse);
+        if(classe != null) {
+            return ResponseEntity.ok(classe); // Retourner les détails du niveau
+        } else {
+            return ResponseEntity.notFound().build(); // Gérer le cas où le niveau n'est pas trouvé
+        }
+    }
 
     @Operation(summary = "Renvoie la liste des Classes")
     @ApiResponses(value = {

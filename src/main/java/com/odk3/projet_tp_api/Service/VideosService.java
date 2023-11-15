@@ -2,7 +2,6 @@ package com.odk3.projet_tp_api.Service;
 
 import com.odk3.projet_tp_api.Repository.VideosRepository;
 import com.odk3.projet_tp_api.exception.NotFoundException;
-import com.odk3.projet_tp_api.model.Utilisateur;
 import com.odk3.projet_tp_api.model.Videos;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,18 +31,18 @@ public class VideosService {
                     if(!Files.exists(rootlocation)){
                         Files.createDirectories(rootlocation);
                         Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                        videos.setVideo("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                        videos.setVideo("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                     }else{
                         try{
                             String nom = location+"\\"+multipartFile.getOriginalFilename();
                             Path name = Paths.get(nom);
                             if(!Files.exists(name)){
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                videos.setVideo("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                videos.setVideo("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }else{
                                 Files.delete(name);
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                videos.setVideo("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                videos.setVideo("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }
                         }catch(Exception e){
                             throw new Exception("some error");

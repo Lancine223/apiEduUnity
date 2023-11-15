@@ -1,12 +1,10 @@
 package com.odk3.projet_tp_api.Service;
 
 import com.odk3.projet_tp_api.Repository.AdministrateurRepository;
-import com.odk3.projet_tp_api.Repository.UtilisateurRepository;
 import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
 import com.odk3.projet_tp_api.model.Administrateur;
-import com.odk3.projet_tp_api.model.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +54,13 @@ public class AdministrateurService {
             throw  new NotFoundException("Cet administrateur n'existe pas");
         }
 
+    }
+    public Administrateur getAdministrateurById(int idAdministrateur){
+
+        Administrateur administrateur= administrateurRepository.findByIdAdministrateur(idAdministrateur);
+        if(administrateur ==null)
+            throw new NotFoundException("cet Administrateur n'existe pas");
+        return administrateur;
     }
 
     public Administrateur connectionAdministrateur(String email, String mon_de_passe) {

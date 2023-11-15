@@ -70,7 +70,8 @@ public class Enseignant {
     @Column(nullable = false)
     private String telephone;
 
-
+    @Column()
+    private int nombreAbonnes;
     //=========================== POUR Diplome ===========================
 
     // Not Null de Spring
@@ -84,7 +85,6 @@ public class Enseignant {
     // Not Null de base donnée
    @Column(nullable = false)
     private String diplome;
-
 
     @NotNull
     // Not Null de base donnée
@@ -124,6 +124,7 @@ public class Enseignant {
     // ============== AproposRepository =====================
     @OneToOne
     @JoinColumn(name = "idApropos")
+    @JsonIgnore
     private Apropos apropos;
     // ============== AdministrateurRepository =====================
     // ============== AbonnementRepository =====================

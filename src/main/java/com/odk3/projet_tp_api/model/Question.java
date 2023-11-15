@@ -1,8 +1,5 @@
 package com.odk3.projet_tp_api.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -33,11 +30,11 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "idQuiz", nullable= false)
-    @JsonIgnoreProperties(value = {"enseignant","questions"})
+    //@JsonIgnoreProperties(value = {"enseignant","questions"})
     private Quiz quiz;
 
     @OneToMany(mappedBy = "question", orphanRemoval = true)
-    @JsonIgnoreProperties(value = {"enseignant","question"})
+    //@JsonIgnoreProperties(value = {"enseignant","question"})
     private List<Reponse> reponses = new ArrayList<>();
 
 

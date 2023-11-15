@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Entity
@@ -25,8 +25,7 @@ public class Abonnement {
 
     @NotNull(message = "la date est vide")
     @Column(nullable = false)
-    private String dateAbonnement;
-
+    private Date dateAbonnement;
 
     @ManyToOne
     @JoinColumn(name = "idEnseignant", nullable = false)

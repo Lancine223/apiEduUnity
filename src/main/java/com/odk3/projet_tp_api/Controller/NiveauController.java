@@ -9,10 +9,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/niveau")
@@ -48,6 +49,17 @@ public class NiveauController {
     public List<Niveau> allNiveaus(){
         return niveauService.listNiveaus();
     }
+
+    @GetMapping("/read/{idNiveau}")
+    public ResponseEntity<Niveau> getOneNiveau(@PathVariable int idNiveau) {
+        Niveau niveau = niveauService.getNiveauById(idNiveau);
+        if(niveau != null) {
+            return ResponseEntity.ok(niveau); // Retourner les détails du niveau
+        } else {
+            return ResponseEntity.notFound().build(); // Gérer le cas où le niveau n'est pas trouvé
+        }
+    }
+
 
 
 

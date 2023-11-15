@@ -1,11 +1,9 @@
 package com.odk3.projet_tp_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Entity
@@ -43,6 +41,7 @@ public class Participer {
 
     @ManyToOne
     @JoinColumn(name = "idQuiz", nullable = false)
+    @JsonIgnore
     private Quiz quiz;
 }
 

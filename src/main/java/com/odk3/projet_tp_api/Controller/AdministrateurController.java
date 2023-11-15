@@ -10,11 +10,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/admin")
 public class AdministrateurController {
@@ -79,6 +82,22 @@ public class AdministrateurController {
     @PutMapping("/modifier")
     public  Object modifierAdministrateur(@Valid @RequestBody Administrateur administrateur) {
         return administrateurService.modifierAdministrateur(administrateur);
+    }
+
+    @GetMapping("/read/{id}")
+    @Operation(summary = "Affichage  d'un Administrateur")
+    public ResponseEntity<Administrateur> getAdministrateurById(@Valid @PathVariable int idAdministrateur){
+        return new ResponseEntity<>(administrateurService.getAdministrateurById(idAdministrateur), HttpStatus.OK) ;}
+    @GetMapping("/profile")
+    public ResponseEntity<Administrateur> getAdminProfile( Administrateur administrateur) {
+        // Récupérez les informations du profil de l'administrateur actuellement connecté
+        Administrateur admin = administrateurService.connectionAdministrateur(administrateur.getEmail(), administrateur.getMotDePasse());
+
+        if (admin != null) {
+            return ResponseEntity.ok(admin);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

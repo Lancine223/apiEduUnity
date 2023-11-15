@@ -1,11 +1,11 @@
 package com.odk3.projet_tp_api.Service;
 
-import com.odk3.projet_tp_api.Repository.EnseignantRepository;
+import com.odk3.projet_tp_api.Repository.AbonnementRepository;
 import com.odk3.projet_tp_api.Repository.EtudiantRepository;
 import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
-import com.odk3.projet_tp_api.model.Enseignant;
+import com.odk3.projet_tp_api.model.Abonnement;
 import com.odk3.projet_tp_api.model.Etudiant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 public class EtudiantService {
     @Autowired
     EtudiantRepository etudiantRepository;
-
+    AbonnementRepository abonnementRepository;
     // Portee , type de retour , nom de la fonction
     public Etudiant creerEtudiant(Etudiant etudiant){
         if (etudiantRepository.findByTelephone(etudiant.getTelephone()) == null) {
@@ -25,6 +25,11 @@ public class EtudiantService {
             throw new DuplicateException("Cet email existe déjà");
         }
 
+    }
+
+    public boolean estAbonne(int idEtudiant) {
+        List<Abonnement> abonnements = abonnementRepository.findByEtudiantIdEtudiant(idEtudiant);
+        return !abonnements.isEmpty();
     }
 
     public List<Etudiant> listEtudiants() {

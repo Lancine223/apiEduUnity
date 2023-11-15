@@ -55,6 +55,14 @@ public class ClasseService {
         // Dans le cas contraire le systÃ¨me retourne la liste
         return ListClasses;
     }
+
+    public  Classe getClasseById( int id){
+        Classe classe = classeRepository.findByIdClasse(id);
+        if(classe != null)
+            return classe;
+        else
+            throw new NotFoundException (" Cette classe n'existe pas");
+    }
     //+++++++++
     public String supprimeClasse(Classe classe) {
 

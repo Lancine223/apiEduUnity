@@ -2,7 +2,6 @@ package com.odk3.projet_tp_api.Controller;
 
 import com.odk3.projet_tp_api.Service.AbonnementService;
 import com.odk3.projet_tp_api.model.Abonnement;
-import com.odk3.projet_tp_api.model.Etudiant;
 import com.odk3.projet_tp_api.model.Utilisateur;
 import com.odk3.projet_tp_api.model.Videos;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
@@ -45,6 +45,23 @@ public class AbonnementController {
         return  new ResponseEntity<>(abonnementService.ListabonneParEtudiant(idEtudiant),HttpStatus.OK);
     }
 
+
+    @PostMapping("/etudiant/{idEtudiant}")
+    public ResponseEntity<Abonnement> createAbonnementForEtudiant(@PathVariable int idEtudiant, @RequestBody Abonnement abonnement) {
+        Abonnement createdAbonnement = abonnementService.createAbonnementForEtudiant(idEtudiant, abonnement);
+        return new ResponseEntity<>(createdAbonnement, HttpStatus.CREATED);
+    }
+// Best pratique
+@PostMapping("/best/{idEtudiant}")
+public ResponseEntity<Abonnement> bestAbonnementForEtudiant(
+        @PathVariable int idEtudiant,
+        @RequestBody Abonnement abonnement) {
+
+    Abonnement newAbonnement = abonnementService.BestPratiquePourAbonner(idEtudiant, abonnement);
+
+    return new ResponseEntity<>(newAbonnement, HttpStatus.CREATED);
+}
+
     @Operation(summary = "Desabonner ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Desabonner avec succès",content = {
@@ -59,4 +76,29 @@ public class AbonnementController {
         return abonnementService.supprimeAbonnement(abonnement);
     }
     ////////////////////////////
+    @GetMapping("/totalAbonnes")
+    public int getTotalAbonnes() {
+        return abonnementService.countTotalAbonne();
+    }
+
+    @Operation(summary = "Renvoie la liste des abonnement")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "List renvoyer",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Abonnement.class))
+            }),
+            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
+            @ApiResponse(responseCode = "204",description = "List vide", content = @Content),
+            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
+    })
+    @GetMapping("/list")
+    public List<Abonnement> allAbonnements(){
+        return abonnementService.listAbonnements();
+    }
+
+    @GetMapping("/totalMontantAbonnements")
+    public int getTotalMontantAbonnements() {
+        return abonnementService.getTotalMontantAbonnements();
+    }
+
+
 }

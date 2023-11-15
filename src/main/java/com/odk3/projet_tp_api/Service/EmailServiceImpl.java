@@ -21,19 +21,18 @@ public class EmailServiceImpl implements EmailDetailsRepository {
     public String sendSimpleMail(EmailDetails details) {
         try{
             SimpleMailMessage message = new SimpleMailMessage();
-
             message.setFrom(sender);
             message.setTo(details.getEmail());
             message.setText(details.getMessageBody());
             message.setSubject(details.getSujet());
-
             //Send message
             javaMailSender.send(message);
             return "Email envoyer avec succès !";
-
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
 
-        }}
+        }
+    }
+
 }
 

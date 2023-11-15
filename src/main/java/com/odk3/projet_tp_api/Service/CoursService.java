@@ -2,12 +2,8 @@ package com.odk3.projet_tp_api.Service;
 
 import com.odk3.projet_tp_api.Repository.CoursRepository;
 import com.odk3.projet_tp_api.exception.DuplicateException;
-import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
-import com.odk3.projet_tp_api.model.Classe;
 import com.odk3.projet_tp_api.model.Cours;
-import com.odk3.projet_tp_api.model.Enseignant;
-import com.odk3.projet_tp_api.model.Filiere;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,18 +31,18 @@ public class CoursService {
                     if(!Files.exists(rootlocation)){
                         Files.createDirectories(rootlocation);
                         Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                        cours.setDocument("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                        cours.setDocument("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                     }else{
                         try{
                             String nom = location+"\\"+multipartFile.getOriginalFilename();
                             Path name = Paths.get(nom);
                             if(!Files.exists(name)){
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                cours.setDocument("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                cours.setDocument("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }else{
                                 Files.delete(name);
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                cours.setDocument("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                cours.setDocument("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }
                         }catch(Exception e){
                             throw new Exception("some error");
@@ -82,7 +78,7 @@ public class CoursService {
                 Path cheminImage = Paths.get(emplacementImage).resolve(nomImage);
 
                 Files.copy(docFile.getInputStream(), cheminImage, StandardCopyOption.REPLACE_EXISTING);
-                CoursExistante.setDocument("http://localhost:8080/eduunity/" + nomImage);
+                CoursExistante.setDocument("http://localhost/eduunity/" + nomImage);
             }
             // Mettre à jour l'audio si fourni
            // Enregistrer la maladie mise à jour

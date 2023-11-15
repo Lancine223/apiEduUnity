@@ -2,7 +2,6 @@ package com.odk3.projet_tp_api.Controller;
 
 import com.odk3.projet_tp_api.Service.FiliereService;
 import com.odk3.projet_tp_api.model.Filiere;
-import com.odk3.projet_tp_api.model.Niveau;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/filiere")
@@ -57,6 +56,16 @@ public class FiliereController {
     @Operation(summary = "Affichage la liste  des Filieres à travers l'id niveau")
     public ResponseEntity<List<Filiere>> listeByNiveau(@PathVariable int idNiveau){
         return  new ResponseEntity<>(filiereService.ListFiliereParNiveau(idNiveau), HttpStatus.OK);
+    }
+
+    @GetMapping("/read/{idFiliere}")
+    public ResponseEntity<Filiere> getOneFiliere(@PathVariable int idFiliere) {
+        Filiere filiere = filiereService.getFiliereById(idFiliere);
+        if(filiere != null) {
+            return ResponseEntity.ok(filiere); // Retourner les détails du niveau
+        } else {
+            return ResponseEntity.notFound().build(); // Gérer le cas où le niveau n'est pas trouvé
+        }
     }
 
 

@@ -4,7 +4,7 @@ import com.odk3.projet_tp_api.Service.EmailServiceImpl;
 import com.odk3.projet_tp_api.model.EmailDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/sendEmail")

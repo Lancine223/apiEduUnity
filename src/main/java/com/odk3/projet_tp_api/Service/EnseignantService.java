@@ -4,6 +4,7 @@ import com.odk3.projet_tp_api.Repository.EnseignantRepository;
 import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
+import com.odk3.projet_tp_api.model.EmailDetails;
 import com.odk3.projet_tp_api.model.Enseignant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +20,17 @@ public class EnseignantService {
     // Pour acceder a la table utilisateur dans la base de donnée
     @Autowired // Injection de dependance
             EnseignantRepository enseignantRepository; // Un variable de type UtilisateurRepository
-
+    @Autowired
+    private EmailServiceImpl emailServiceIplm;
     public String changeAccess(int id){
         Enseignant enseignant = enseignantRepository.findByIdEnseignant(id);
         if (enseignant == null)
             throw new NotFoundException("invalid");
-        enseignant.setAcces(!enseignant.getAcces());
-        enseignantRepository.save(enseignant);
+            enseignant.setAcces(!enseignant.getAcces());
+            enseignantRepository.save(enseignant);
         return "succes";
     }
+
     public Enseignant createEnseignant(Enseignant enseignant, MultipartFile multipartFile) throws Exception{
         if (enseignantRepository.findByEmail(enseignant.getEmail()) == null) {
 
@@ -38,18 +41,18 @@ public class EnseignantService {
                     if(!Files.exists(rootlocation)){
                         Files.createDirectories(rootlocation);
                         Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                        enseignant.setDiplome("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                        enseignant.setDiplome("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                     }else{
                         try{
                             String nom = location+"\\"+multipartFile.getOriginalFilename();
                             Path name = Paths.get(nom);
                             if(!Files.exists(name)){
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                enseignant.setDiplome("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                enseignant.setDiplome("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }else{
                                 Files.delete(name);
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                enseignant.setDiplome("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                enseignant.setDiplome("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }
                         }catch(Exception e){
                             throw new Exception("some error");
@@ -59,6 +62,12 @@ public class EnseignantService {
                     throw new Exception(e.getMessage());
                 }
             }
+
+            String message = "Votre inscription est pris en compte, merci nous allons vous contacter très bientôt";
+
+            //Alert
+            EmailDetails details = new EmailDetails(enseignant.getEmail(), message, "Message de la part EduUnity");
+            emailServiceIplm.sendSimpleMail(details);
 
             return enseignantRepository.save(enseignant);
         } else {
@@ -137,6 +146,27 @@ public class EnseignantService {
         }
     }
 */
+
+    public String changeAccessE(int id){
+        Enseignant enseignant = enseignantRepository.findByIdEnseignant(id);
+        if (enseignant == null) {
+            throw new NotFoundException("Invalid");
+        }
+
+        boolean oldStatus = enseignant.getAcces();
+        boolean newStatus = !oldStatus;
+
+        enseignant.setAcces(newStatus);
+        enseignantRepository.save(enseignant);
+
+        if (oldStatus != newStatus) {
+            String message = (newStatus) ? "Votre compte est activé. Vous pouvez maintenant vous connecter avec votre email et mot de passe." : "Votre compte est désactivé. Vous ne pourrez plus vous connecter. Merci de nous contacter.";
+            EmailDetails details = new EmailDetails(enseignant.getEmail(), message, "Message de la part EduUnity");
+            emailServiceIplm.sendSimpleMail(details);
+        }
+
+        return "success";
+    }
 
 
     public String supprimer(int idEnseignant) {
