@@ -2,8 +2,11 @@ package com.odk3.projet_tp_api.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.odk3.projet_tp_api.Service.EnseignantPodjoService;
 import com.odk3.projet_tp_api.Service.EnseignantService;
+import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.model.Enseignant;
+import com.odk3.projet_tp_api.model.EnseignantPodjo;
 import com.odk3.projet_tp_api.model.Videos;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,13 +21,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
+@Valid
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/enseignant")
 public class EnseignantController {
     @Autowired
     EnseignantService enseignantService;
+    @Autowired
+    EnseignantPodjoService enseignantpodjoservice;
 
 
     @PostMapping("/create")
@@ -39,11 +45,57 @@ public class EnseignantController {
         }catch(JsonProcessingException e){
             throw new Exception(e.getMessage());
         }
-
         Enseignant savedUser = enseignantService.createEnseignant(enseignant,multipartFile);
 
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
+/*
+    @PostMapping("/podjocreate")
+    @Operation(summary = "Création d'un Enseignant")
+    public  String createEnseignantPodjofonction(
+            @Valid @RequestParam("enseignantpodjo") String enseignantpodjoString,
+            @RequestParam(value ="diplome", required=false) MultipartFile multipartFile) throws Exception {
+
+        EnseignantPodjo enseignantpodjo = new EnseignantPodjo();
+        try{
+            enseignantpodjo = new JsonMapper().readValue(enseignantpodjoString, EnseignantPodjo.class);
+        }catch(JsonProcessingException e){
+            throw new Exception(e.getMessage());
+        }
+         enseignantpodjoservice.createEnseignantPodjo(enseignantpodjo,multipartFile);
+
+        return "succes";
+    }
+
+*/
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    // Dans votre méthode de gestion des exceptions
+    @ExceptionHandler(DuplicateException.class)
+    public ResponseEntity<String> handleDuplicateException(DuplicateException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    @PostMapping("/podjocreate")
+    @Operation(summary = "Création d'un Enseignant")
+    public String createEnseignantPodjofonction(
+            @Valid @RequestParam("enseignantpodjo") String enseignantpodjoString,
+            @RequestParam(value ="diplome", required=false) MultipartFile multipartFile) throws Exception {
+
+        EnseignantPodjo enseignantpodjo = new EnseignantPodjo();
+        try {
+            enseignantpodjo = new JsonMapper().readValue(enseignantpodjoString, EnseignantPodjo.class);
+        } catch (JsonProcessingException e) {
+            throw new Exception(e.getMessage());
+        }
+
+        try {
+            enseignantpodjoservice.createEnseignantPodjo(enseignantpodjo, multipartFile);
+            return "succes";
+        } catch (DuplicateException ex) {
+            return ex.getMessage();
+        }
+    }
+
 
     //////////////////////////////////////////
     //////////////////////////
@@ -68,7 +120,7 @@ public class EnseignantController {
 
     @PutMapping("/changeAccess/{idEnseignant}")
     public ResponseEntity<String> tochangeAccess(@PathVariable int idEnseignant) {
-        enseignantService.changeAccessE(idEnseignant);
+        enseignantService.changeAccess(idEnseignant);
         return ResponseEntity.ok("Succès : Accès de l'enseignant modifié");
     }
 

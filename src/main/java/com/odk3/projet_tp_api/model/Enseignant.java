@@ -121,6 +121,15 @@ public class Enseignant {
     @ManyToOne
     @JoinColumn(name = "idClasse", nullable = false)
     private Classe classe;
+
+    // Ajout des champs filiere et niveau
+    @ManyToOne
+    @JoinColumn(name = "idFiliere", nullable = false)
+    private Filiere filiere;
+
+    @ManyToOne
+    @JoinColumn(name = "idNiveau", nullable = false)
+    private Niveau niveau;
     // ============== AproposRepository =====================
     @OneToOne
     @JoinColumn(name = "idApropos")

@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/video")
 public class VideosController {

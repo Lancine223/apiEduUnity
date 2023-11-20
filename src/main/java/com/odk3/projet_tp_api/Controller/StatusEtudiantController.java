@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/status")
 public class StatusEtudiantController {

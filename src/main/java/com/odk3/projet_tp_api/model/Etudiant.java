@@ -57,6 +57,14 @@ public class Etudiant {
     @JoinColumn(name = "idClasse")
     private Classe classe;
 
+    @ManyToOne
+    @JoinColumn(name = "idFiliere", nullable = false)
+    private Filiere filiere;
+
+    @ManyToOne
+    @JoinColumn(name = "idNiveau", nullable = false)
+    private Niveau niveau;
+
     // pour le telephone
 
     @NotNull(message = "Champs vide")

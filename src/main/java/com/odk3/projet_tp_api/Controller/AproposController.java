@@ -10,8 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-@CrossOrigin
-
+@CrossOrigin(origins = "*")
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/apropos")

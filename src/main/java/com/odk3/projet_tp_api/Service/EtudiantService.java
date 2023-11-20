@@ -16,6 +16,7 @@ import java.util.List;
 public class EtudiantService {
     @Autowired
     EtudiantRepository etudiantRepository;
+    @Autowired
     AbonnementRepository abonnementRepository;
     // Portee , type de retour , nom de la fonction
     public Etudiant creerEtudiant(Etudiant etudiant){
@@ -62,9 +63,10 @@ public class EtudiantService {
 
     }
 
-    public Etudiant connectionEtudiant(String telephone, String mon_de_passe) {
-        if (etudiantRepository.findByTelephoneAndMotDePasse(telephone, mon_de_passe) != null) {
-            return (Etudiant) etudiantRepository.findByTelephoneAndMotDePasse(telephone, mon_de_passe);
+    public Etudiant connectionEtudiant(String telephone, String motDePasse) {
+        Etudiant etudiant = etudiantRepository.findByTelephoneAndMotDePasse(telephone, motDePasse);
+        if ( etudiant != null) {
+            return etudiant;
         }else {
             throw  new NotFoundException("Cet etudiant n'existe pas");
         }

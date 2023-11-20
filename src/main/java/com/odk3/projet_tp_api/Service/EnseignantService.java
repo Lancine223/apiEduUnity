@@ -19,16 +19,32 @@ import java.util.List;
 public class EnseignantService {
     // Pour acceder a la table utilisateur dans la base de donnée
     @Autowired // Injection de dependance
-            EnseignantRepository enseignantRepository; // Un variable de type UtilisateurRepository
+    EnseignantRepository enseignantRepository; // Un variable de type UtilisateurRepository
     @Autowired
     private EmailServiceImpl emailServiceIplm;
     public String changeAccess(int id){
         Enseignant enseignant = enseignantRepository.findByIdEnseignant(id);
+        boolean estactive = enseignant.getAcces();
         if (enseignant == null)
+        {
+
             throw new NotFoundException("invalid");
+        }else {
             enseignant.setAcces(!enseignant.getAcces());
             enseignantRepository.save(enseignant);
+            if(estactive == true){
+                String message = "Votre compte est désactiver , merci de nous contacter";
+                //Alert
+                EmailDetails details = new EmailDetails(enseignant.getEmail(), message, "Message de la part EduUnity");
+                emailServiceIplm.sendSimpleMail(details);
+            }else {
+                String message = "Votre compte est activer , merci de vous connecter avec votre compte";
+                //Alert
+                EmailDetails details = new EmailDetails(enseignant.getEmail(), message, "Message de la part EduUnity");
+                emailServiceIplm.sendSimpleMail(details);
+            }
         return "succes";
+        }
     }
 
     public Enseignant createEnseignant(Enseignant enseignant, MultipartFile multipartFile) throws Exception{
@@ -71,7 +87,9 @@ public class EnseignantService {
 
             return enseignantRepository.save(enseignant);
         } else {
-            throw new DuplicateException("Cet email existe déjà");}}
+            throw new DuplicateException("Cet email existe déjà");
+        }
+    }
 //La fin du methode ajouter
 
 
@@ -188,7 +206,9 @@ public class EnseignantService {
         if (user == null) {
             throw new NotFoundException("Cet Enseignant n'existe pas");
         }
-
+        if(user.getAcces() != true){
+            throw new RuntimeException("Votre compte n'est pas activer");
+        }
         return user;
     }
     ////////§/§/////

@@ -25,4 +25,12 @@ public class Filiere {
     @OneToMany(mappedBy = "filiere", orphanRemoval = true)
     @JsonIgnore
     private List<Classe> classe = new ArrayList<>();
+
+    @OneToMany(mappedBy = "filiere", orphanRemoval = true)
+    @JsonIgnore
+    private List<Enseignant> enseignant = new ArrayList<>();
+
+    @OneToMany(mappedBy = "filiere", orphanRemoval = true)
+    @JsonIgnore
+    private List<Etudiant> etudiant = new ArrayList<>();
 }

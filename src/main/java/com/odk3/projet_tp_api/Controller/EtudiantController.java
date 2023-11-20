@@ -1,6 +1,8 @@
 package com.odk3.projet_tp_api.Controller;
+import com.odk3.projet_tp_api.Service.EtudiantPodjoService;
 import com.odk3.projet_tp_api.Service.EtudiantService;
 import com.odk3.projet_tp_api.model.Etudiant;
+import com.odk3.projet_tp_api.model.EtudiantPodjo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,14 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/etudiant")
 public class EtudiantController {
     @Autowired
     EtudiantService etudiantService;
-
+    @Autowired
+    EtudiantPodjoService etudiantPodjoService;
 
     @Operation(summary = "Ajouter un etudiant")
     @ApiResponses(value = {
@@ -47,8 +50,15 @@ public class EtudiantController {
     })
     @PostMapping("/login")
     public Object connexion(@Parameter(description = "Telephone de l'Etudiant") @RequestParam("telephone") String telephone,
-                            @Parameter(description = "Mot de passe de l'Etudiant") @RequestParam("mot_de_passe") String mot_de_passe) {
-        return etudiantService.connectionEtudiant(telephone, mot_de_passe);
+                            @Parameter(description = "Mot de passe de l'Etudiant") @RequestParam("motDePasse") String motDePasse) {
+        return etudiantService.connectionEtudiant(telephone, motDePasse);
+    }
+
+    @PostMapping("/podjocreate")
+    @Operation(summary = "Enregistrer un etudiant")
+    public String creer(@RequestBody EtudiantPodjo etudiantPodjo1){
+
+        return etudiantPodjoService.createEtudiantPodjo(etudiantPodjo1);
     }
 
     @Operation(summary = "Renvoie la liste des Etudiants")

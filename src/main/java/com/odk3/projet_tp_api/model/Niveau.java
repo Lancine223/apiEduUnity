@@ -1,7 +1,6 @@
 package com.odk3.projet_tp_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -22,4 +21,12 @@ public class Niveau {
     @OneToMany(mappedBy = "niveau", orphanRemoval = true)
     @JsonIgnore
     private List<Filiere> filiere = new ArrayList<>();
+
+    @OneToMany(mappedBy = "niveau", orphanRemoval = true)
+    @JsonIgnore
+    private List<Enseignant> enseignant = new ArrayList<>();
+
+    @OneToMany(mappedBy = "niveau", orphanRemoval = true)
+    @JsonIgnore
+    private List<Etudiant> etudiant = new ArrayList<>();
 }
