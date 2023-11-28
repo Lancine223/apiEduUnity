@@ -51,6 +51,19 @@ public class EtudiantService {
 
     }
 
+    public Etudiant modifierPodjo(Etudiant etudiant) {
+        Etudiant EtudiantExitant = etudiantRepository.findByIdEtudiant(etudiant.getIdEtudiant());
+        if (EtudiantExitant != null) {
+            EtudiantExitant.setNom(etudiant.getNom());
+            EtudiantExitant.setPrenom(etudiant.getPrenom());
+            EtudiantExitant.setAge(etudiant.getAge());
+            EtudiantExitant.setMotDePasse(etudiant.getMotDePasse());
+            EtudiantExitant.setTelephone(etudiant.getTelephone());
+            return etudiantRepository.save(EtudiantExitant);
+        } else {
+            throw new NotFoundException("Cet etudiant n'existe pas");
+        }
+    }
 
     public String supprimeEtudiant(Etudiant etudiant) {
 

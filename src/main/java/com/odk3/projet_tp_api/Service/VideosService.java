@@ -22,7 +22,7 @@ public class VideosService {
 
     //Le debut du methode ajouter
     public Videos createVideos(Videos videos, MultipartFile multipartFile) throws Exception{
-        if (videosRepository.findById(videos.getIdVideos()) == null) {
+        if (videosRepository.findByTitreContains(videos.getTitre()) == null) {
 
             if(multipartFile != null){
                 String location = "C:\\xampp\\htdocs\\eduunity";
@@ -55,7 +55,7 @@ public class VideosService {
 
             return videosRepository.save(videos);
         } else {
-            throw new EntityExistsException("Cet Id n' existe déjà");}}
+            throw new EntityExistsException("Cet titre existe déjà");}}
 //La fin du methode ajouter
     public List<Videos> allVideosByEnseignant(int idEnseignant){
 
@@ -72,7 +72,7 @@ public class VideosService {
     /////////////suppression
     public String supprimeVideos(Videos videos) {
 
-        if (videosRepository.findById(videos.getIdVideos()) != null) {
+        if (videosRepository.findByIdVideos(videos.getIdVideos()) != null) {
             videosRepository.delete(videos);
             return "Succès";
         } else {

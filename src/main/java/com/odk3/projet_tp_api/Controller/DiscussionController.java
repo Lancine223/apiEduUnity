@@ -3,6 +3,11 @@ package com.odk3.projet_tp_api.Controller;
 import com.odk3.projet_tp_api.Service.DiscussionService;
 import com.odk3.projet_tp_api.model.Discussion;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +25,49 @@ public class DiscussionController {
     @Operation(summary = "Affichage de la liste  des discussion à travers l'id de l'Forum")
     public ResponseEntity<List<Discussion>> listeByDiscussion(@PathVariable int idForum){
         return  new ResponseEntity<>(discussionService.ListDiscussionParForum(idForum), HttpStatus.OK);
+    }
+
+
+    @Operation(summary = "Inserer une discussion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "discussion inserer",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Discussion.class))
+            }),
+            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
+            @ApiResponse(responseCode = "409",description = "discussion exist déjà", content = @Content),
+            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
+    })
+    @PostMapping("/add")
+    public Object ajouterDiscussion(@Valid @RequestBody Discussion  discussion){
+        return discussionService.creerDiscussion(discussion);
+    }
+
+    @Operation(summary = "Modifier un discussion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "discussion modifier",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Discussion.class))
+            }),
+            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
+            @ApiResponse(responseCode = "404",description = "discussion n'existe pas", content = @Content),
+            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
+    })
+    @PutMapping("/modifier")
+    public  Object modifierdiscussion(@Valid @RequestBody Discussion discussion) {
+        return discussionService.modifierDiscusssion(discussion);
+    }
+
+
+    @Operation(summary = "Supprimer un discussion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "discussion supprimer",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Discussion.class))
+            }),
+            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
+            @ApiResponse(responseCode = "404",description = "discussion introuvable", content = @Content),
+            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
+    })
+    @DeleteMapping("/supprimer")
+    public String supprimerDiscussion(@Valid @RequestBody Discussion discussion) {
+        return discussionService.supprimeDiscussion(discussion);
     }
 }

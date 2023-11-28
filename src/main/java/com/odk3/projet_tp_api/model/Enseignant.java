@@ -133,7 +133,6 @@ public class Enseignant {
     // ============== AproposRepository =====================
     @OneToOne
     @JoinColumn(name = "idApropos")
-    @JsonIgnore
     private Apropos apropos;
     // ============== AdministrateurRepository =====================
     // ============== AbonnementRepository =====================

@@ -91,7 +91,7 @@ public class EtudiantController {
     })
     @PutMapping("/modifier")
     public  Object modifierEtudiant(@Valid @RequestBody Etudiant etudiant) {
-        return etudiantService.modifierEtudiant(etudiant);
+        return etudiantService.modifierPodjo(etudiant);
     }
     @Operation(summary = "Supprimer un Etudiant")
     @ApiResponses(value = {

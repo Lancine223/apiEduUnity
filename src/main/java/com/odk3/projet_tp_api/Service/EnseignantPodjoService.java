@@ -91,6 +91,7 @@ public class EnseignantPodjoService {
             enseignant.setDiplome(enseignantpo.getDiplome());
             enseignant.setMotDePasse(enseignantpo.getMotDePasse());
             enseignant.setAcces(false);
+            enseignant.setApropos(enseignantpo.getApropos());
             enseignant.setNiveau(niveauRepository.findByIdNiveau(enseignantpo.getNiveau()));
             enseignant.setFiliere(filiereRepository.findByIdFiliere(enseignantpo.getFiliere()));
             enseignant.setClasse(classeRepository.findByIdClasse(enseignantpo.getClasse()));

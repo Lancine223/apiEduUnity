@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
@@ -45,6 +46,16 @@ public class AproposController {
     @PutMapping("/modifier")
     public  Object modifierApropos(@Valid @RequestBody Apropos apropos) {
         return aproposService.modifierApropos(apropos);
+    }
+
+    @GetMapping("/read/{idEnseignant}")
+    public ResponseEntity<Apropos> getOneNiveau(@PathVariable int idEnseignant) {
+        Apropos apropos = aproposService.getParIdEnseignant(idEnseignant);
+        if(apropos != null) {
+            return ResponseEntity.ok(apropos); // Retourner les détails du niveau
+        } else {
+            return ResponseEntity.notFound().build(); // Gérer le cas où le niveau n'est pas trouvé
+        }
     }
 
 }

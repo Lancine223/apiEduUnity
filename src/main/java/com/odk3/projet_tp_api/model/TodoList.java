@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 @Data
 public class TodoList {
@@ -12,9 +14,13 @@ public class TodoList {
     @Column(nullable = false)
     private  int idTodoList;
 
-    @NotNull(message = "veuillez entrer le titre")
+    @NotNull(message = "veuillez entrer la date")
     @Column(nullable = false)
-    private String titre;
+    private Date datetache;
+
+    @NotNull()
+    @Column(nullable = false)
+    private boolean complete;
 
     @NotNull(message = "veuillez entrer une description")
     @Column(nullable = false)

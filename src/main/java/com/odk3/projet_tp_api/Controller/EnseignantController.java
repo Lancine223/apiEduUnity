@@ -49,25 +49,6 @@ public class EnseignantController {
 
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
-/*
-    @PostMapping("/podjocreate")
-    @Operation(summary = "Création d'un Enseignant")
-    public  String createEnseignantPodjofonction(
-            @Valid @RequestParam("enseignantpodjo") String enseignantpodjoString,
-            @RequestParam(value ="diplome", required=false) MultipartFile multipartFile) throws Exception {
-
-        EnseignantPodjo enseignantpodjo = new EnseignantPodjo();
-        try{
-            enseignantpodjo = new JsonMapper().readValue(enseignantpodjoString, EnseignantPodjo.class);
-        }catch(JsonProcessingException e){
-            throw new Exception(e.getMessage());
-        }
-         enseignantpodjoservice.createEnseignantPodjo(enseignantpodjo,multipartFile);
-
-        return "succes";
-    }
-
-*/
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     // Dans votre méthode de gestion des exceptions
@@ -138,11 +119,19 @@ public class EnseignantController {
         return enseignantService.modifierEnseignant(enseignant);
     }
 
-    @DeleteMapping("/delete/{idEnseignant}")
-    @Operation(summary = "Supprimer une enseignant par son ID")
-    public String deleteEnseigant(@Valid @PathVariable int idEnseignant) {
-        return enseignantService.supprimer(idEnseignant);
+    @GetMapping("/list/{idClasse}")
+    @Operation(summary = "Affichage la liste  des enseignants à travers l'id de la classe")
+    public ResponseEntity<List<Enseignant>> ListEnseignants(@PathVariable int idClasse){
+        return  new ResponseEntity<>(enseignantService.ListEnparClasse(idClasse),HttpStatus.OK);
     }
+
+
+    @DeleteMapping("/supprimer")
+    public String supprimerEnseignant(@Valid @RequestBody Enseignant enseignant) {
+        return enseignantService.supprimer(enseignant);
+    }
+
+
     @PostMapping("/login")
     @Operation(summary = "Connexion d'un Enseignant")
     public Object connexion(@RequestParam("email") String email,

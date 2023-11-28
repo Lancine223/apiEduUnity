@@ -11,17 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
-@CrossOrigin(origins = "*")
+
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin( origins = "*")
 @AllArgsConstructor
 @RequestMapping("/cours")
 public class CoursController {
     @Autowired
     CoursService coursService;
-
 
     @PostMapping("/create")
     @Operation(summary = "Création d'un Cours")
@@ -35,9 +33,7 @@ public class CoursController {
         }catch(JsonProcessingException e){
             throw new Exception(e.getMessage());
         }
-
         Cours savedCours = coursService.createCours(cours,multipartFile);
-
         return new ResponseEntity<>(savedCours, HttpStatus.CREATED);
     }
 

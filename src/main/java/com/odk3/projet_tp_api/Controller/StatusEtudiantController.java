@@ -1,4 +1,5 @@
 package com.odk3.projet_tp_api.Controller;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.odk3.projet_tp_api.Service.StatusEtudiantService;
@@ -62,4 +63,14 @@ public class StatusEtudiantController {
     }
 
     ////////////////////////////
+
+    @GetMapping("/read/{idEtudiant}")
+    public ResponseEntity<StatusEtudiant> getparIdEtu(@PathVariable int idEtudiant) {
+        StatusEtudiant statusEtudiant = statusEtudiantService.getParIdEtudiant(idEtudiant);
+        if(statusEtudiant != null) {
+            return ResponseEntity.ok(statusEtudiant); // Retourner les détails du niveau
+        } else {
+            return ResponseEntity.notFound().build(); // Gérer le cas où le niveau n'est pas trouvé
+        }
+    }
 }

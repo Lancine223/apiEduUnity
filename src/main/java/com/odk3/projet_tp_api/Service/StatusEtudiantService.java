@@ -4,6 +4,7 @@ import com.odk3.projet_tp_api.Repository.StatusEtudiantRepository;
 import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
 import com.odk3.projet_tp_api.model.StatusEtudiant;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,18 +28,18 @@ public class StatusEtudiantService {
                     if(!Files.exists(rootlocation)){
                         Files.createDirectories(rootlocation);
                         Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                        statusEtudiant.setBulletin("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                        statusEtudiant.setBulletin("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                     }else{
                         try{
                             String nom = location+"\\"+multipartFile.getOriginalFilename();
                             Path name = Paths.get(nom);
                             if(!Files.exists(name)){
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                statusEtudiant.setBulletin("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                statusEtudiant.setBulletin("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }else{
                                 Files.delete(name);
                                 Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                                statusEtudiant.setBulletin("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                                statusEtudiant.setBulletin("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                             }
                         }catch(Exception e){
                             throw new Exception("some error");
@@ -62,24 +63,24 @@ public class StatusEtudiantService {
         existingStatusEtudiant.setExamen(statusEtudiant.getExamen());
         existingStatusEtudiant.setEtudiant(statusEtudiant.getEtudiant());
         if(multipartFile != null){
-            String location = "C:\\xampp\\htdocs\\musaka";
+            String location = "C:\\xampp\\htdocs\\eduunity";
             try{
                 Path rootlocation = Paths.get(location);
                 if(!Files.exists(rootlocation)){
                     Files.createDirectories(rootlocation);
                     Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                    statusEtudiant.setBulletin("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                    existingStatusEtudiant.setBulletin("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                 }else{
                     try{
                         String nom = location+"\\"+multipartFile.getOriginalFilename();
                         Path name = Paths.get(nom);
                         if(!Files.exists(name)){
                             Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                            statusEtudiant.setBulletin("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                            existingStatusEtudiant.setBulletin("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                         }else{
                             Files.delete(name);
                             Files.copy(multipartFile.getInputStream(),rootlocation.resolve(multipartFile.getOriginalFilename()));
-                            statusEtudiant.setBulletin("http://localhost:8080/eduunity/"+multipartFile.getOriginalFilename());
+                            existingStatusEtudiant.setBulletin("http://localhost/eduunity/"+multipartFile.getOriginalFilename());
                         }
                     }catch(Exception e){
                         throw new Exception("some error");
@@ -92,4 +93,17 @@ public class StatusEtudiantService {
 
         return statusEtudiantRepository.save(existingStatusEtudiant);
     }
+
+    public StatusEtudiant getParIdEtudiant(int idEtudiant){
+
+        // Obtention de tous les budget dans la base de donnÃ©es
+        StatusEtudiant statusEtudiant = statusEtudiantRepository.findByEtudiantIdEtudiant(idEtudiant);
+
+        // Si la liste est vide, le systÃ¨me lÃ¨vera une exception
+        if (statusEtudiant == null)
+            throw new EntityNotFoundException("Billetin non trouver !");
+        // Dans le cas contraire le systÃ¨me retourne la liste
+        return statusEtudiant;
+    }
+
 }

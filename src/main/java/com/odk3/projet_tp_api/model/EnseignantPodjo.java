@@ -16,6 +16,8 @@ public class EnseignantPodjo {
 
     private String telephone;
 
+    private Apropos apropos;
+
     private String diplome;
 
     private String email;

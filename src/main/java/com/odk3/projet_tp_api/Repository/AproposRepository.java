@@ -10,5 +10,6 @@ public interface AproposRepository extends JpaRepository<Apropos, Integer> {
 
     public Apropos findByIdApropos(int idApropos);
     Apropos findByEnseignant(Enseignant enseignant);
+    public Apropos findByEnseignantIdEnseignant(int idEnseignant);
 
 }
