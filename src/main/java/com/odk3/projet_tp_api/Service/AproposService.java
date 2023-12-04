@@ -35,14 +35,12 @@ public class AproposService {
         else {
             throw  new NotFoundException("Cet apropos n'existe pas");
         }
-
     }
 
     public Apropos getParIdEnseignant(int idEnseignant){
 
         // Obtention de tous les budget dans la base de donnÃ©es
         Apropos apropos = aproposRepository.findByEnseignantIdEnseignant(idEnseignant);
-
         // Si la liste est vide, le systÃ¨me lÃ¨vera une exception
         if (apropos == null)
             throw new EntityNotFoundException("Apropos non completer !");

@@ -29,6 +29,7 @@ public class DiscussionService {
     }
 
     public Discussion creerDiscussion(Discussion discussion){
+
         if (discussionRepository.findByIdDiscussion(discussion.getIdDiscussion()) == null) {
             return discussionRepository.save(discussion);
         } else {
@@ -37,16 +38,7 @@ public class DiscussionService {
 
     }
 
-    public Discussion modifierDiscusssion(Discussion discussion) {
 
-        if (discussionRepository.findByIdDiscussion(discussion.getIdDiscussion()) != null){
-            return discussionRepository.save(discussion);
-        }
-        else {
-            throw  new NotFoundException("Cette discussion n'existe pas");
-        }
-
-    }
     //++++++++++++++++++++++++
 
     //+++++++++

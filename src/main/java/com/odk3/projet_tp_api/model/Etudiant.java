@@ -118,11 +118,16 @@ public class Etudiant {
 
     @OneToMany(mappedBy = "etudiant", orphanRemoval = true)
     @JsonIgnore
+    private List<Discussion> discussions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "etudiant", orphanRemoval = true)
+    @JsonIgnore
     private List<Notation> notationList = new ArrayList<>();
 
     @OneToMany(mappedBy = "etudiant", orphanRemoval = true)
     @JsonIgnore
     private List<TodoList> todoListList = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "etudiant", orphanRemoval = true)
     @JsonIgnore

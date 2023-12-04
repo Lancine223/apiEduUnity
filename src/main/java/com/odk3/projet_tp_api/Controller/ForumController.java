@@ -54,9 +54,6 @@ public class ForumController {
     }
 
 
-
-
-
     @Operation(summary = "Modifier un forum")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "forum modifier",content = {

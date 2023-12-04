@@ -2,7 +2,6 @@ package com.odk3.projet_tp_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -13,7 +12,7 @@ public class Discussion {
     @Column(nullable = false)
     private int idDiscussion;
 
-    @NotNull(message = "veuillez choisir le message")
+    @Column(nullable = false)
     private String message;
 
     @ManyToOne

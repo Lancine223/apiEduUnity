@@ -171,6 +171,10 @@ public class Enseignant {
     @JsonIgnore
     private List<Forum> forums = new ArrayList<>();
 
+    @OneToMany(mappedBy = "enseignant", orphanRemoval = true)
+    @JsonIgnore
+    private List<Discussion> discussions = new ArrayList<>();
+
     // ============== videos =====================
 
     @OneToMany(mappedBy = "enseignant", orphanRemoval = true)

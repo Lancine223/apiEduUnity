@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 @RequestMapping("/abonnement")
 public class AbonnementController {
@@ -31,7 +30,11 @@ public class AbonnementController {
         return  new ResponseEntity<>(abonnementService.ListabonneParEtudiant(idEtudiant),HttpStatus.OK);
     }
 
-
+    @GetMapping("/read/{idEnseignant}")
+    @Operation(summary = "Affichage la liste  des abonnements à travers l'id de l' enseignant ")
+    public ResponseEntity<List<Abonnement>> listeAbonnementByEnseignant(@PathVariable int idEnseignant){
+        return  new ResponseEntity<>(abonnementService.ListabonneParEnseignant(idEnseignant),HttpStatus.OK);
+    }
 
 // Best pratique
 @PostMapping("/best/{idEtudiant}")

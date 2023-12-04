@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -19,6 +20,10 @@ public class Forum {
     @NotNull(message = "le champs titre est vide")
     @Column(nullable = false)
     private String titre;
+
+    @NotNull(message = "le champs date est vide")
+    @Column(nullable = false)
+    private Date dateForum;
 
     @ManyToOne
     @JoinColumn(name = "idEnseignant", nullable = false)

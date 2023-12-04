@@ -1,14 +1,10 @@
 package com.odk3.projet_tp_api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -74,7 +70,7 @@ public class Administrateur {
 
     // size : lenght de notre Mot de passe
     // message : message afficher si le champs de notre Mot de passe est vide
-    @Size(min = 6, message = "Saisissez un Mot de pass correct")
+    @Size(min = 6, message = "Saisissez un Mot de pass 6 carractère min ")
 
     // Not Null de base de donnée
     @Column(nullable = false)

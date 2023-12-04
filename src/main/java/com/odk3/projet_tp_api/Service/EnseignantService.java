@@ -152,7 +152,10 @@ public class EnseignantService {
     public String supprimer(Enseignant enseignant) {
             Apropos apropos = aproposRepository.findByEnseignantIdEnseignant(enseignant.getIdEnseignant());
         if (enseignantRepository.findByIdEnseignant(enseignant.getIdEnseignant()) != null) {
-            aproposRepository.delete(apropos);
+
+            if(apropos != null){
+                aproposRepository.delete(apropos);
+            }
             enseignantRepository.delete(enseignant);
             return "Succès";
         } else {

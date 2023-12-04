@@ -44,7 +44,7 @@ public class EnseignantPodjoService {
         this.enseignantRepository = enseignantRepository;
     }
     public String createEnseignantPodjo(EnseignantPodjo enseignantpo, MultipartFile multipartFile) throws Exception{
-        System.out.println(enseignantpo.getEmail());
+        //System.out.println(enseignantpo.getEmail());
         if (enseignantRepository.findByEmail(enseignantpo.getEmail()) == null) {
 
             if(multipartFile != null){
@@ -97,10 +97,10 @@ public class EnseignantPodjoService {
             enseignant.setClasse(classeRepository.findByIdClasse(enseignantpo.getClasse()));
             enseignantRepository.save(enseignant);
 
-            String message = "Votre inscription est pris en compte, merci nous allons vous contacter très bientôt";
+            String message = "Votre inscription est pris en compte, merci de patienter, nous allons vous contacter très bientôt";
 
             //Alert
-            EmailDetails details = new EmailDetails(enseignant.getEmail(), message, "Message de la part EduUnity");
+            EmailDetails details = new EmailDetails(enseignantpo.getEmail(), message, "Message de la part EduUnity");
             emailServiceIplm.sendSimpleMail(details);
 
             return "Enseignant creer avec succès";

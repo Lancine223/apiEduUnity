@@ -1,7 +1,7 @@
 package com.odk3.projet_tp_api.Controller;
 
 import com.odk3.projet_tp_api.Service.TodoListService;
-import com.odk3.projet_tp_api.model.Quiz;
+import com.odk3.projet_tp_api.model.Apropos;
 import com.odk3.projet_tp_api.model.TodoList;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,51 +23,34 @@ import java.util.List;
 public class TodoController {
     @Autowired
     TodoListService todoListService;
-    @PutMapping("/complete/{idTodoList}")
-    public ResponseEntity<String> toAccomplit(@PathVariable int idTodoList) {
-        todoListService.AcomplitTache(idTodoList);
-        return ResponseEntity.ok("Succès : tache modifie avec succès");
-    }
 
-    @Operation(summary = "Ajouter des taches ")
+    @Operation(summary = "Inserer un TodoList")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Tache ajouter",content = {
-                    @Content(mediaType = "application/json",schema = @Schema(implementation = Quiz.class))
+            @ApiResponse(responseCode = "200",description = "TodoList inserer",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = TodoList.class))
             }),
             @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
-            @ApiResponse(responseCode = "409",description = "Tache existe déjà", content = @Content),
+            @ApiResponse(responseCode = "409",description = "TodoList exist déjà", content = @Content),
             @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
     })
-
-    @PostMapping("/ajouter")
-    public ResponseEntity<Object> ajouterTache(@Valid @RequestBody TodoList todoList) {
-        TodoList verifierTodo = todoListService.creerTodo(todoList);
-        if (verifierTodo != null) {
-            return new ResponseEntity<>(verifierTodo, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("cette tache existe dejà! ", HttpStatus.OK);
-        }
+    @PostMapping("/add")
+    public Object ajouterTodoList(@Valid @RequestBody TodoList todoList){
+        return todoListService.creerTodoList(todoList);
     }
 
-    @Operation(summary = "Modification des taches ")
+
+    @Operation(summary = "Modifier TodoList d'un etudiant")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Tache supprimer",content = {
-                    @Content(mediaType = "application/json",schema = @Schema(implementation = Quiz.class))
+            @ApiResponse(responseCode = "200",description = "TodoList modifier",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Apropos.class))
             }),
             @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
-            @ApiResponse(responseCode = "404",description = "introuvable", content = @Content),
+            @ApiResponse(responseCode = "404",description = "TodoList n'existe pas", content = @Content),
             @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
     })
-
     @PutMapping("/modifier")
-    public ResponseEntity<Object> modifierTache(@Valid @RequestBody TodoList todoList) {
-        TodoList verifierTodo = todoListService.modifierTodo(todoList);
-        if (verifierTodo != null) {
-            return new ResponseEntity<>(verifierTodo, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("cette tache n'existe pas", HttpStatus.NOT_FOUND);
-        }
-        //return new ResponseEntity<>(quizService.modifierQuiz(quiz), HttpStatus.OK);
+    public  Object modifierTodoList(@Valid @RequestBody TodoList todoList) {
+        return todoListService.modifierTodoList(todoList);
     }
 
     @GetMapping("/list/{idEtudiant}")

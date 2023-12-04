@@ -59,7 +59,13 @@ public class AbonnementService {
         }
     }
 
-
+    public List<Abonnement> ListabonneParEnseignant(int idEnseignant){
+        if (!abonnementRepository.findByEnseignantIdEnseignant(idEnseignant).isEmpty()){
+            return abonnementRepository.findByEnseignantIdEnseignant(idEnseignant);
+        }else {
+            throw new NotFoundException("Aucun abonnement disponible");
+        }
+    }
 
 
     public Abonnement BestPratiquePourAbonner(int idEtudiant, Abonnement abonnement) {

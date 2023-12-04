@@ -1,6 +1,7 @@
 package com.odk3.projet_tp_api.Service;
 
 import com.odk3.projet_tp_api.Repository.TodoListRepository;
+import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
 import com.odk3.projet_tp_api.model.TodoList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,32 +15,25 @@ public class TodoListService {
     @Autowired // Injection de dependance
             TodoListRepository todoListRepository; // Un variable de type UtilisateurRepository
 
-    public String AcomplitTache(int id){
-        TodoList todoList = todoListRepository.findByIdTodoList(id);
-        if (todoList == null)
-        {
 
-            throw new NotFoundException("invalid");
-        }else {
-            todoList.setComplete(!todoList.isComplete());
-            todoListRepository.save(todoList);
-            return "succes";
-        }
-    }
 
-    public TodoList creerTodo(TodoList todoList) {
-        if (todoListRepository.findByDescriptionAndEtudiant(todoList.getDescription(), todoList.getEtudiant()) == null) {
+    public TodoList creerTodoList(TodoList todoList){
+        if (todoListRepository.findByIdTodoList(todoList.getIdTodoList()) == null) {
+
             return todoListRepository.save(todoList);
         } else {
-            return null;
+            throw new DuplicateException("Cette tache existe déjà");
         }
+
     }
 
-    public TodoList modifierTodo(TodoList todoList) {
-        if (todoListRepository.findByIdTodoListAndEtudiant(todoList.getIdTodoList(), todoList.getEtudiant()) != null) {
+    public TodoList modifierTodoList(TodoList todoList) {
+
+        if (todoListRepository.findByIdTodoList(todoList.getIdTodoList()) != null){
             return todoListRepository.save(todoList);
-        } else {
-            throw new NotFoundException("Cette tache n'existe pas");
+        }
+        else {
+            throw  new NotFoundException("Cette tache n'existe pas");
         }
     }
 

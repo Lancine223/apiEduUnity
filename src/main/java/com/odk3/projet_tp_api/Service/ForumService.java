@@ -19,11 +19,9 @@ public class ForumService {
 
         // Obtention de tous les budget dans la base de donnÃ©es
         List<Forum> ListForums = forumRepository.findByEnseignantIdEnseignant(idEnseignant);
-
         // Si la liste est vide, le systÃ¨me lÃ¨vera une exception
         if (ListForums.isEmpty())
             throw new EntityNotFoundException("Aucun forum trouvé");
-
         // Dans le cas contraire le systÃ¨me retourne la liste
         return ListForums;
     }
@@ -37,8 +35,6 @@ public class ForumService {
         }
 
     }
-
-
     //++++++++++++++++++++++++
     public Forum modifierForum(Forum forum) {
 

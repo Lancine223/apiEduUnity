@@ -5,6 +5,7 @@ import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
 import com.odk3.projet_tp_api.model.Administrateur;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,4 +72,20 @@ public class AdministrateurService {
         }
 
     }
+
+    @PostConstruct
+    public void init(){
+        Administrateur administrateur = new Administrateur();
+        administrateur.setEmail("lacinekeita20@gmail.com");
+        administrateur.setPrenom("Lanciné");
+        administrateur.setMotDePasse("Kambacamara");
+        administrateur.setRole("superadmin");
+        administrateur.setNom("Keita");
+        Administrateur adminExit = administrateurRepository.findByEmail(administrateur.getEmail());
+        if (adminExit == null ){
+            administrateurRepository.save(administrateur);
+        }
+    }
+
+
 }

@@ -2,11 +2,13 @@ package com.odk3.projet_tp_api.Service;
 
 import com.odk3.projet_tp_api.Repository.AbonnementRepository;
 import com.odk3.projet_tp_api.Repository.EtudiantRepository;
+import com.odk3.projet_tp_api.Repository.StatusEtudiantRepository;
 import com.odk3.projet_tp_api.exception.DuplicateException;
 import com.odk3.projet_tp_api.exception.NoContentException;
 import com.odk3.projet_tp_api.exception.NotFoundException;
 import com.odk3.projet_tp_api.model.Abonnement;
 import com.odk3.projet_tp_api.model.Etudiant;
+import com.odk3.projet_tp_api.model.StatusEtudiant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ public class EtudiantService {
     EtudiantRepository etudiantRepository;
     @Autowired
     AbonnementRepository abonnementRepository;
+
+    @Autowired
+    StatusEtudiantRepository statusEtudiantRepository;
     // Portee , type de retour , nom de la fonction
     public Etudiant creerEtudiant(Etudiant etudiant){
         if (etudiantRepository.findByTelephone(etudiant.getTelephone()) == null) {
@@ -66,8 +71,11 @@ public class EtudiantService {
     }
 
     public String supprimeEtudiant(Etudiant etudiant) {
-
+        StatusEtudiant statusEtudiant = statusEtudiantRepository.findByEtudiantIdEtudiant(etudiant.getIdEtudiant());
         if (etudiantRepository.findByIdEtudiant(etudiant.getIdEtudiant()) != null) {
+            if(statusEtudiant != null){
+                statusEtudiantRepository.delete(statusEtudiant);
+            }
             etudiantRepository.delete(etudiant);
             return "Succès";
         } else {
@@ -77,6 +85,7 @@ public class EtudiantService {
     }
 
     public Etudiant connectionEtudiant(String telephone, String motDePasse) {
+
         Etudiant etudiant = etudiantRepository.findByTelephoneAndMotDePasse(telephone, motDePasse);
         if ( etudiant != null) {
             return etudiant;

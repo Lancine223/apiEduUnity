@@ -1,7 +1,9 @@
 package com.odk3.projet_tp_api.Controller;
 
+import com.odk3.projet_tp_api.Service.DiscussionPodjoService;
 import com.odk3.projet_tp_api.Service.DiscussionService;
 import com.odk3.projet_tp_api.model.Discussion;
+import com.odk3.projet_tp_api.model.DiscussionPodjo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,12 +23,21 @@ import java.util.List;
 public class DiscussionController {
     @Autowired
     DiscussionService discussionService;
+
+    @Autowired
+    DiscussionPodjoService discussionPodjoService;
     @GetMapping("/list/{idForum}")
     @Operation(summary = "Affichage de la liste  des discussion à travers l'id de l'Forum")
     public ResponseEntity<List<Discussion>> listeByDiscussion(@PathVariable int idForum){
         return  new ResponseEntity<>(discussionService.ListDiscussionParForum(idForum), HttpStatus.OK);
     }
 
+    @PostMapping("/podjocreate")
+    @Operation(summary = "Envoyer une discussion")
+    public String creer(@RequestBody DiscussionPodjo discussionPodjo){
+
+        return discussionPodjoService.createDiscussionPodjo(discussionPodjo);
+    }
 
     @Operation(summary = "Inserer une discussion")
     @ApiResponses(value = {
@@ -41,21 +52,6 @@ public class DiscussionController {
     public Object ajouterDiscussion(@Valid @RequestBody Discussion  discussion){
         return discussionService.creerDiscussion(discussion);
     }
-
-    @Operation(summary = "Modifier un discussion")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "discussion modifier",content = {
-                    @Content(mediaType = "application/json",schema = @Schema(implementation = Discussion.class))
-            }),
-            @ApiResponse(responseCode = "400",description = "Mauvaise requete", content = @Content),
-            @ApiResponse(responseCode = "404",description = "discussion n'existe pas", content = @Content),
-            @ApiResponse(responseCode = "500",description = "Erreur server", content = @Content)
-    })
-    @PutMapping("/modifier")
-    public  Object modifierdiscussion(@Valid @RequestBody Discussion discussion) {
-        return discussionService.modifierDiscusssion(discussion);
-    }
-
 
     @Operation(summary = "Supprimer un discussion")
     @ApiResponses(value = {

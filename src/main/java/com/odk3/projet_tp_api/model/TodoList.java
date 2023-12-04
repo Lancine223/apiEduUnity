@@ -18,9 +18,6 @@ public class TodoList {
     @Column(nullable = false)
     private Date datetache;
 
-    @NotNull()
-    @Column(nullable = false)
-    private boolean complete;
 
     @NotNull(message = "veuillez entrer une description")
     @Column(nullable = false)
