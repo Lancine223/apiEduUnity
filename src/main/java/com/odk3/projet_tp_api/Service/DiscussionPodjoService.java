@@ -47,10 +47,8 @@ public class DiscussionPodjoService {
             }else {
                 discussion.setEnseignant(enseignantRepository.findByIdEnseignant(discussionPodjo.getEnseignant()));
             }
-
             if(discussionPodjo.getEtudiant() == 0){
                 discussion.setEtudiant(null);
-
             }else {
                 discussion.setEtudiant(etudiantRepository.findByIdEtudiant(discussionPodjo.getEtudiant()));
             }
